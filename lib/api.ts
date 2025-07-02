@@ -1,7 +1,6 @@
-import axios from 'axios';
 import { Note } from '@/types/note';
 
-const BASE_URL = 'https://notehub-app.onrender.com/notes';
+/*const BASE_URL = 'https://notehub-app.onrender.com/notes';
 const TOKEN = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
 
 const config = {
@@ -25,4 +24,26 @@ export const createNote = async (note: Omit<Note, 'id'>) => {
 
 export const deleteNote = async (id: number) => {
   await axios.delete(`${BASE_URL}/${id}`, config);
+};*/
+
+import axios from 'axios';
+
+const apiClient = axios.create({
+  baseURL: '/api', // звернення до проксі Next.js
+});
+
+export const fetchNotes = async () => {
+  const { data } = await apiClient.get('/notes');
+  return data as Note[];
 };
+
+export const fetchNoteById = async (id: number) => {
+  const { data } = await apiClient.get(`/notes/${id}`);
+  return data as Note;
+};
+
+export const createNote = async (note: Omit<Note, 'id'>) => {
+  const { data } = await apiClient.post('/notes', note);
+  return data as Note;
+};
+

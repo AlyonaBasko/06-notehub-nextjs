@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { type Note, type NoteTag } from '../types/note';
+import { type Note} from '../types/note';
 
 const API_BASE = 'https://notehub-public.goit.study/api';
 const token = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
@@ -47,7 +47,7 @@ export async function fetchNotes({
 export interface CreateNoteParams {
   title: string;
   content?: string;
-  tag: NoteTag;
+  tag: Note;
 }
 
 export async function createNote(params: CreateNoteParams): Promise<Note> {
