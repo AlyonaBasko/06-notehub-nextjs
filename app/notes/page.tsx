@@ -1,18 +1,12 @@
-import { QueryClient } from '@tanstack/react-query';
-import { fetchNotes } from '../../lib/api';
+import { fetchNotes } from '@/lib/api';
 import NotesClient from './Notes.client';
 
 export default async function NotesPage() {
-  const queryClient = new QueryClient();
-
-  await queryClient.prefetchQuery({
-    queryKey: ['notes'],
-    queryFn: fetchNotes,
-  });
+  const { notes, totalPages } = await fetchNotes({ page: 1, perPage: 12, search: '' });
 
   return (
     <div>
-      <NotesClient />
+      <NotesClient initialNotes={notes} initialTotalPages={totalPages} />
     </div>
   );
 }

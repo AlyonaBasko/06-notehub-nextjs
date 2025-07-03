@@ -2,6 +2,7 @@ import css from './NoteList.module.css';
 import { type Note } from '../../types/note';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteNote } from '../../lib/api';
+import Link from 'next/link';
 
 interface NoteListProps {
   notes: Note[];
@@ -29,6 +30,7 @@ export default function NoteList({ notes }: NoteListProps) {
               className={css.button}
               onClick={() => mutate(note.id)} 
             >
+              <Link href={`/notes/${note.id}`}>View details</Link>
               Delete
             </button>
           </div>
