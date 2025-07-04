@@ -11,7 +11,7 @@ interface NoteListProps {
 export default function NoteList({ notes }: NoteListProps) {
   const queryClient = useQueryClient();
 
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: (id: number) => deleteNote(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['notes'] });
@@ -26,13 +26,20 @@ export default function NoteList({ notes }: NoteListProps) {
           <p className={css.content}>{note.content}</p>
           <div className={css.footer}>
             <span className={css.tag}>{note.tag}</span>
-            <button
-              className={css.button}
-              onClick={() => mutate(note.id)} 
-            >
-              <Link href={`/notes/${note.id}`}>View details</Link>
-              Delete
-            </button>
+
+            <div className={css.actions}>
+              <Link href={`/notes/${note.id}`} className={css.viewLink}>
+                View details
+              </Link>
+
+              <button
+                className={css.button}
+                onClick={() => mutate(note.id)}
+                disabled={isPending}
+              >
+                {isPending ? 'Deleting...' : 'Delete'}
+              </button>
+            </div>
           </div>
         </li>
       ))}

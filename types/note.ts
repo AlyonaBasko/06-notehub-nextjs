@@ -4,10 +4,11 @@ export interface Note {
   content: string;
   createdAt: string;
   updatedAt: string;
-  tag?: string;
+  tag: string;
 }
 
 export interface FormValues {
   title: string;
   content: string;
+  tag: string;
 }

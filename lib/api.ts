@@ -1,4 +1,4 @@
-import { Note } from '@/types/note';
+import { Note, FormValues } from '@/types/note';
 import axios from 'axios';
 
 const API_BASE = 'https://notehub-public.goit.study/api';
@@ -41,9 +41,18 @@ export interface CreateNoteParams {
   tag?: string; // або інший відповідний тип
 }
 
-export async function createNote(params: CreateNoteParams): Promise<Note> {
-  const { data } = await axiosInstance.post<Note>('/notes', params);
-  return data;
+export async function createNote(note: FormValues) {
+  const response = await fetch('/api/notes', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(note),
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to create note');
+  }
+
+  return response.json();
 }
 
 export interface DeleteNoteResponse {
