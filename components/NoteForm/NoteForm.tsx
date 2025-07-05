@@ -8,6 +8,7 @@ import type { FormValues, Note, NoteTag } from '@/types/note';
 
 interface NoteFormProps {
   onClose: () => void;
+  onSubmit: (noteData: FormValues) => void;
 }
 
 const TAG_OPTIONS: NoteTag[] = ['Todo', 'Work', 'Personal', 'Meeting', 'Shopping'];
@@ -29,7 +30,7 @@ function ErrorMessage({ error }: { error?: string }) {
   return <div style={{ color: 'red' }}>{error}</div>;
 }
 
-export default function NoteForm({ onClose }: NoteFormProps) {
+export default function NoteForm({ onClose, onSubmit }: NoteFormProps) {
   const queryClient = useQueryClient();
 
   const mutation = useMutation<Note, Error, FormValues>({
@@ -48,7 +49,7 @@ export default function NoteForm({ onClose }: NoteFormProps) {
     },
     validationSchema,
     onSubmit: (values) => {
-      mutation.mutate(values);
+      onSubmit(values);
     },
   });
 
