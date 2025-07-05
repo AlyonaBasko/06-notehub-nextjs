@@ -33,11 +33,12 @@ export default function NotesClient({ initialNotes, initialTotalPages }: NotesCl
   const { data, isLoading, isError } = useQuery<NotesResponse, Error>({
     queryKey: ['notes', { page, search: debouncedSearch }],
     queryFn: () => fetchNotes({ page, perPage: 12, search: debouncedSearch }),
-    placeholderData: {
+    initialData: () => ({
       notes: initialNotes,
       totalPages: initialTotalPages,
-    },
+    }),
   });
+  
   
   
   const notes = data?.notes ?? [];

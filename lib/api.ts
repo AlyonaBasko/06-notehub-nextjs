@@ -38,21 +38,12 @@ export async function fetchNotes({
 export interface CreateNoteParams {
   title: string;
   content?: string;
-  tag?: string; // або інший відповідний тип
+  tag?: string; 
 }
 
-export async function createNote(note: FormValues) {
-  const response = await fetch('/api/notes', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(note),
-  });
-
-  if (!response.ok) {
-    throw new Error('Failed to create note');
-  }
-
-  return response.json();
+export async function createNote(note: FormValues): Promise<Note> {
+  const { data } = await axiosInstance.post<Note>('/notes', note);
+  return data;
 }
 
 export interface DeleteNoteResponse {

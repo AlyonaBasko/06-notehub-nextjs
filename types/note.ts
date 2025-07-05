@@ -7,8 +7,10 @@ export interface Note {
   tag: string;
 }
 
+export type NoteTag = 'Todo' | 'Work' | 'Personal' | 'Meeting' | 'Shopping';
+
 export interface FormValues {
   title: string;
   content: string;
-  tag: string;
+  tag: NoteTag;
 }
