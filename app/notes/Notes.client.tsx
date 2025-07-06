@@ -11,7 +11,7 @@ import Pagination from '@/components/Pagination/Pagination';
 import NoteModal from '@/components/NoteModal/NoteModal';
 import { fetchNotes } from '@/lib/api';
 import type { Note } from '@/types/note';
-import { FormValues } from '@/types/note';
+
 
 
 interface NotesResponse {
@@ -37,23 +37,16 @@ export default function NotesClient({ initialNotes, initialTotalPages }: NotesCl
       notes: initialNotes,
       totalPages: initialTotalPages,
     }),
+    placeholderData: {
+      notes: initialNotes,
+      totalPages: initialTotalPages,
+    },
   });
   
   
   
   const notes = data?.notes ?? [];
   const totalPages = data?.totalPages ?? 1;
-  
-  const handleCreateNote = async (noteData: FormValues) => {
-    const completeNote: Omit<Note, 'id'> = {
-      ...noteData,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    };
-  
-    console.log('Create note:', completeNote);
-    setModalOpen(false);
-  };
   
 
   return (
@@ -79,7 +72,7 @@ export default function NotesClient({ initialNotes, initialTotalPages }: NotesCl
 
       {notes.length > 0 && <NoteList notes={notes} />}
 
-      {isModalOpen && <NoteModal onSubmit={handleCreateNote} onClose={() => setModalOpen(false)} />}
+      {isModalOpen && <NoteModal onClose={() => setModalOpen(false)} />}
     </div>
   );
 }
