@@ -16,10 +16,10 @@ const TAG_OPTIONS: NoteTag[] = ['Todo', 'Work', 'Personal', 'Meeting', 'Shopping
 const validationSchema = Yup.object({
   title: Yup.string()
     .min(3, 'Title must be at least 3 characters')
-    .max(100, 'Title cannot exceed 100 characters')
+    .max(50, 'Title cannot exceed 50 characters')
     .required('Title is required'),
   content: Yup.string()
-    .max(1000, 'Content cannot exceed 1000 characters'),
+    .max(500, 'Content cannot exceed 500 characters'),
   tag: Yup.mixed<NoteTag>()
     .oneOf(TAG_OPTIONS, 'Invalid tag')
     .required('Tag is required'),
