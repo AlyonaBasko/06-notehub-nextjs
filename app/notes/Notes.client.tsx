@@ -31,7 +31,7 @@ export default function NotesClient({ initialNotes, initialTotalPages }: NotesCl
   const [isModalOpen, setModalOpen] = useState(false);
 
   const { data, isLoading, isError } = useQuery<NotesResponse, Error>({
-    queryKey:  ['notes', page, search],
+    queryKey:  ['notes', page, debouncedSearch],
     queryFn: () => fetchNotes({ page, perPage: 12, search: debouncedSearch }),
     initialData: () => ({
       notes: initialNotes,
